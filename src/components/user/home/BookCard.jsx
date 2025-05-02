@@ -1,8 +1,72 @@
-import React from "react";
-import { Heart, Star } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Heart as HeartIcon, Heart as HeartFilled, Star } from "lucide-react";
 import images from "../../../assets/assets";
+import apiClient from "../../../api/axios";
+import { toast } from "react-toastify";
 
 const BookCard = ({ book }) => {
+  const [wish, setWish] = useState(false);
+  // const getWishq
+  const checkWish = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const bookId = book.bookId;
+      console.log(bookId)
+      const { data } = await apiClient.get(`/book/checkWishlist/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+console.log(data)
+      if (data.status) {
+        setWish(true);
+      }
+    } catch (error) {}
+  };
+
+  const addWish = async ({}) => {
+    try {
+      const BookId = book.bookId;
+      const token = localStorage.getItem("token");
+      const { data } = await apiClient.post(
+        "/book/addWishlist",
+        { BookId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (data.statusCode == 200) {
+        toast.success("Bookmarked Successfully")
+        checkWish();
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    checkWish();
+  }, [book]);
+
+  // const addWish = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const { data } = await apiClient.post("/book/addWishlist", { bookId: book.bookId }, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     if (data.statusCode === 200) {
+  //       setWish(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to add to wishlist:", error);
+  //   }
+  // };
+
   return (
     <div className="flex flex-col w-[255px] pb-8">
       {/* Book Cover with Heart Icon */}
@@ -12,15 +76,22 @@ const BookCard = ({ book }) => {
           alt={book.title}
           className="w-full h-[386px] object-cover rounded-md"
         />
-        <button className="absolute top-2 right-2 rounded-full p-2 bg-web-background">
-          <Heart />
+        <button
+          onClick={addWish}
+          className="absolute top-2 right-2 rounded-full p-1"
+        >
+          {wish ? (
+            <HeartFilled className="text-red-500 fill-red-500" />
+          ) : (
+            <HeartIcon />
+          )}
         </button>
       </div>
 
       {/* Rating */}
       <div className="flex flex-row justify-between items-center gap-2 mb-1">
         <div className="flex items-center justify-center bg-web-primary border border-gray-500 rounded-full p-1 h-6 w-14">
-          <Star className="h-4"/>
+          <Star className="h-4" />
           <span className="text-xs font-bold ml-0.5">4.5</span>
         </div>
         <span className="text-gray-500 text-sm">140 Reviews</span>
@@ -37,10 +108,11 @@ const BookCard = ({ book }) => {
         <div className="text-xs text-gray-500">Rs {book.price} mrp</div>
         <div className="flex justify-between items-center">
           <span className="font-bold">
-            Rs{" "}
-            {book.price - (book.discount * book.price) / 100}
+            Rs {book.price - (book.discount * book.price) / 100}
           </span>
-          <span className="text-orange-500 font-bold">{book.discount}% Off</span>
+          <span className="text-orange-500 font-bold">
+            {book.discount}% Off
+          </span>
         </div>
       </div>
 
