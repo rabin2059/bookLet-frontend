@@ -167,12 +167,6 @@ const AdminBook = () => {
                     >
                       View
                     </button>
-                    <button
-                      onClick={() => navigate(`/admin/books/edit/${book.bookId}`)}
-                      className="flex-1 text-center text-web-secondary bg-web-primary p-2 rounded-md font-semibold"
-                    >
-                      Edit
-                    </button>
                   </div>
                 </div>
               </div>
@@ -231,12 +225,6 @@ const AdminBook = () => {
                         className="text-web-primary bg-web-secondary p-1 px-4 rounded-md font-semibold"
                       >
                         View
-                      </button>
-                      <button
-                        onClick={() => navigate(`/admin/books/edit/${book.bookId}`)}
-                        className="text-web-secondary bg-web-primary p-1 px-5 rounded-md font-semibold"
-                      >
-                        Edit
                       </button>
                     </td>
                   </tr>

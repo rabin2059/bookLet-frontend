@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import images from "../../assets/assets";
 import { Search } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const HeaderSection = () => {
   const location = useLocation();
-  const title = location.pathname === "/admin"
+  const [customTitle, setCustomTitle] = useState("");
+
+  useEffect(() => {
+    const pathParts = location.pathname.split("/").filter(Boolean);
+    if (pathParts.includes("view") && pathParts.length >= 4) {
+      const bookId = pathParts[pathParts.length - 1];
+      axios.get(`/api/bookcrud/get/${bookId}`).then((res) => {
+        setCustomTitle(res.data.title || "Book Details");
+      }).catch(() => {
+        setCustomTitle("Book Details");
+      });
+    } else {
+      setCustomTitle("");
+    }
+  }, [location.pathname]);
+
+  const defaultTitle = location.pathname === "/admin"
     ? "Dashboard"
     : location.pathname.split("/").filter(Boolean).slice(-1)[0];
-  const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+  const formattedTitle = customTitle || (defaultTitle.charAt(0).toUpperCase() + defaultTitle.slice(1));
 
   return (
     <div className="flex flex-row h-[80px] px-6 pr-12 justify-between items-center bg-web-third">

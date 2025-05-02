@@ -26,7 +26,7 @@ const SignUpSection = ({ onClose, setShowSignIn }) => {
         "Content-Type": "application/json",
       },
     });
-    if (data.success) {
+    if (data.statusCode == 200) {
       toast.success(data.message);
       setShowSignIn(true);
       onClose();
