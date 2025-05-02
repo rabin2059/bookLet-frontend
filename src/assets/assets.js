@@ -7,6 +7,7 @@ import herobook from "./images/herobook.png";
 import book1 from "./images/book1.png";
 import book2 from "./images/book2.png";
 import book3 from "./images/book3.png";
+import addtoCart from "./images/addtocart.png";
 
 const images = {
   logo,
@@ -17,7 +18,8 @@ const images = {
   herobook,
   book1,
   book2,
-  book3
+  book3,
+  addtoCart,
 };
 
 export default images;

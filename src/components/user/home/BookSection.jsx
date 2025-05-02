@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import BookCard from '../BookCard';
-import apiClient from '../../../api/axios';
+import React, { useEffect, useState } from "react";
+import BookCard from "./BookCard";
+import apiClient from "../../../api/axios";
+import Loading from "../../basic components/Loading";
+import { ArrowBigLeft, ArrowLeft, ArrowRight } from "lucide-react";
 
 const BookSection = () => {
   const [books, setBooks] = useState([]);
 
   const fetchBooks = async () => {
     try {
-      const { data } = await apiClient.get('/book/all');
-
-      // Sort by latest createdAt and take first 4
+      const { data } = await apiClient.get("/book/all");
+      console.log(data);
       const sortedBooks = data.data
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 4);
-
+        .slice(0, 6);
+      console.log(sortedBooks);
       setBooks(sortedBooks);
     } catch (error) {
-      console.error('Error fetching books:', error);
+      console.error("Error fetching books:", error);
     }
   };
 
@@ -24,28 +25,27 @@ const BookSection = () => {
     fetchBooks();
   }, []);
 
-  return (
-    <div className="flex flex-wrap justify-start gap-6 px-10">
-    {books.map((book) => (
-      <BookCard
-        key={book.bookId}
-        title={book.title}
-        author={book.author}
-        coverImage={book.imageUrl !== 'string' ? book.imageUrl : '/fallback.jpg'}
-        rating={4.5}
-        reviewCount={Math.floor(Math.random() * 200)}
-        originalPrice={book.price}
-        discountedPrice={
-          book.discount > 0
-            ? book.price - (book.price * book.discount) / 100
-            : book.price
-        }
-        discountPercentage={book.discount}
-        onAddToCart={() => console.log('Added to cart:', book.bookId)}
-      />
-    ))}
-  </div>
-  
+  return books ? (
+    <div className="px-24 bg-[#fefdf9]">
+      <div className="flex flex-row items-center justify-between">
+        <h1 className="font-bold text-2xl mb-4">New Arrivals</h1>
+        <div className="flex flex-row gap-2">
+          <button className="bg-web-discount/20 border border-gray-500 rounded-full">
+            <ArrowLeft className="p-1"/>
+          </button>
+          <button className="bg-web-primary border border-gray-500 rounded-full">
+            <ArrowRight className="p-1"/>
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-wrap justify-start gap-6">
+        {books.map((book) => (
+          <BookCard key={book.bookId} book={book} />
+        ))}
+      </div>
+    </div>
+  ) : (
+    <Loading />
   );
 };
 

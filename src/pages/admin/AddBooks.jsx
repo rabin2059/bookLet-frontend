@@ -21,6 +21,7 @@ const AddBooks = () => {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,10 +75,12 @@ const AddBooks = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(res)
 
       setTimeout(() => {
         toast.success("Book created successfully!");
         setIsSubmitting(false);
+        setMessage(null);
       }, 1000);
     } catch (err) {
       console.error(err);
