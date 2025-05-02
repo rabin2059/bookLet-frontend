@@ -4,15 +4,15 @@ import images from "../../../assets/assets";
 
 const BookCard = ({ book }) => {
   return (
-    <div className="flex flex-col w-[255px]">
+    <div className="flex flex-col w-[255px] pb-8">
       {/* Book Cover with Heart Icon */}
       <div className="relative mb-2">
         <img
-          src={book.image}
+          src={book.imageUrl}
           alt={book.title}
           className="w-full h-[386px] object-cover rounded-md"
         />
-        <button className="absolute top-2 right-2 rounded-full p-1">
+        <button className="absolute top-2 right-2 rounded-full p-2 bg-web-background">
           <Heart />
         </button>
       </div>
