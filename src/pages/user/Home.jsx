@@ -1,11 +1,13 @@
 import React from "react";
 import HeroSection from "../../components/user/home/HeroSection";
 import BookSection from "../../components/user/home/BookSection";
+import GenreSection from "../../components/user/home/GenreSection";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-web-background px-24">
       <HeroSection />
+      <GenreSection />
       <BookSection />
     </div>
   );
