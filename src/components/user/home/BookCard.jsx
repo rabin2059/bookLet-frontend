@@ -93,10 +93,13 @@ const BookCard = ({ book }) => {
           alt={book.title}
           className="w-full h-[386px] object-cover rounded-md"
         />
-        <div className="absolute top-2 right-2 rounded-full  bg-web-background p-2">
+        <div
+          className="absolute top-2 right-2 rounded-full  bg-web-background px-2 pt-2"
+        >
+
           {wish ? (
             <button onClick={removeWish}>
-              <HeartFilled className="text-red-500 fill-red-500 " />
+               <HeartFilled className="text-red-500 fill-red-500" />
             </button>
           ) : (
             <button onClick={addWish}>
