@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronDown, CircleUserRound, Heart } from "lucide-react";
 import images from "../../assets/assets";
 import SignUp from "../user/auth/SignUpSection";
 import SignIn from "../user/auth/SignInSection";
+import { AppContext } from "../../context/AppContext";
 
 const NavBar = () => {
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
@@ -11,6 +12,7 @@ const NavBar = () => {
   const [showSignIn, setShowSignIn] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { cart } = useContext(AppContext) || { cart: [] };
 
   useEffect(() => {
     const checkLogin = () => {
@@ -256,7 +258,7 @@ const NavBar = () => {
                 alt=""
               />
               <span className="absolute bottom-2 right-2 bg-orange-500 text-white text-[9px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full">
-                10
+                {cart.length}
               </span>
             </NavLink>
             <NavLink
