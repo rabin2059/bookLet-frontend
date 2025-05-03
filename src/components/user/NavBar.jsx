@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronDown, CircleUserRound, Heart } from "lucide-react";
 import images from "../../assets/assets";
 import SignUp from "../user/auth/SignUpSection";
 import SignIn from "../user/auth/SignInSection";
+import { AppContext } from "../../context/AppContext";
 
 const NavBar = () => {
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
@@ -11,6 +12,7 @@ const NavBar = () => {
   const [showSignIn, setShowSignIn] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { cart } = useContext(AppContext) || { cart: [] };
 
   useEffect(() => {
     const checkLogin = () => {
@@ -25,7 +27,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full sticky top-0 z-50 bg-web-background">
       {/* Top promotion bar */}
       <div className="w-full bg-web-secondary text-web-primary py-4 text-center">
         <div className="container bg-web-secondary mx-auto flex items-center justify-center">
@@ -77,13 +79,16 @@ const NavBar = () => {
               onMouseEnter={() => setCategoryDropdownOpen(true)}
               onMouseLeave={() => setCategoryDropdownOpen(false)}
             >
-              <NavLink to="/course" className={({ isActive }) =>
-                `flex items-center py-2 px-3 text-l font-bold transition-colors ${
-                  isActive
-                    ? "bg-gray-700 text-web-primary rounded-full px-5"
-                    : "text-gray-700 hover:text-gray-900"
-                }`
-              }>
+              <NavLink
+                to="/books"
+                className={({ isActive }) =>
+                  `flex items-center py-2 px-3 text-l font-bold transition-colors ${
+                    isActive
+                      ? "bg-gray-700 text-web-primary rounded-full px-5"
+                      : "text-gray-700 hover:text-gray-900"
+                  }`
+                }
+              >
                 Books
                 <ChevronDown className="w-4 h-4 ml-1" />
               </NavLink>
@@ -253,7 +258,7 @@ const NavBar = () => {
                 alt=""
               />
               <span className="absolute bottom-2 right-2 bg-orange-500 text-white text-[9px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full">
-                10
+                {cart.length}
               </span>
             </NavLink>
             <NavLink

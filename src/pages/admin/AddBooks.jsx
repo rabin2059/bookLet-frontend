@@ -1,3 +1,15 @@
+
+const genreOptions = [
+  "Fiction",
+  "Non-Fiction",
+  "Science",
+  "History",
+  "Biography",
+  "Fantasy",
+  "Mystery",
+  "Romance",
+  "Horror",
+];
 import React, { useState } from "react";
 import apiClient from "../../api/axios";
 import { toast } from "react-toastify";
@@ -75,12 +87,13 @@ const AddBooks = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res)
+      console.log(res);
 
       setTimeout(() => {
         toast.success("Book created successfully!");
         setIsSubmitting(false);
         setMessage(null);
+        window.location.href = `/admin/books`;
       }, 1000);
     } catch (err) {
       console.error(err);
@@ -134,14 +147,51 @@ const AddBooks = () => {
                 <label className="block text-[#435058] font-medium mb-2">
                   {label}
                 </label>
-                <input
-                  type={type}
-                  name={name}
-                  value={formData[name]}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#DCF763] focus:border-transparent transition-all"
-                  required
-                />
+                {label === "Genre" ? (
+                  <select
+                    name="genre"
+                    value={formData.genre}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#DCF763] focus:border-transparent transition-all"
+                    required
+                  >
+                    <option value="">Select Genre</option>
+                    {genreOptions.map((genre) => (
+                      <option key={genre} value={genre}>
+                        {genre}
+                      </option>
+                    ))}
+                  </select>
+                ) : label === "Format" ? (
+                  <select
+                    name="format"
+                    value={formData.format}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#DCF763] focus:border-transparent transition-all"
+                    required
+                  >
+                    <option value="">Select Format</option>
+                    <option value="Paperback">Paperback</option>
+                    <option value="Hardcover">Hardcover</option>
+                    <option value="Signed Edition">Signed Edition</option>
+                    <option value="Limited Edition">Limited Edition</option>
+                    <option value="First Edition">First Edition</option>
+                    <option value="Collector’s Edition">
+                      Collector’s Edition
+                    </option>
+                    <option value="Author’s Edition">Author’s Edition</option>
+                    <option value="Deluxe Edition">Deluxe Edition</option>
+                  </select>
+                ) : (
+                  <input
+                    type={type}
+                    name={name}
+                    value={formData[name]}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#DCF763] focus:border-transparent transition-all"
+                    required
+                  />
+                )}
               </div>
             ))}
           </div>
