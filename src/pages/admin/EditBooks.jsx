@@ -247,10 +247,14 @@ const EditBooks = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Format</option>
-              <option value="Hardcover">Hardcover</option>
               <option value="Paperback">Paperback</option>
-              <option value="E-Book">E-Book</option>
-              <option value="Audiobook">Audiobook</option>
+              <option value="Hardcover">Hardcover</option>
+              <option value="Signed Edition">Signed Edition</option>
+              <option value="Limited Edition">Limited Edition</option>
+              <option value="First Edition">First Edition</option>
+              <option value="Collector’s Edition">Collector’s Edition</option>
+              <option value="Author’s Edition">Author’s Edition</option>
+              <option value="Deluxe Edition">Deluxe Edition</option>
             </select>
           </div>
 
