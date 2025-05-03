@@ -77,6 +77,7 @@ export const AppContextProvider = (props) => {
     getCart();
     fetchWishlist();
   }, []);
+
   const value = {
     allBooks,
     cart,

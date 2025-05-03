@@ -106,7 +106,7 @@ const BookCard = ({ book }) => {
         <div className="absolute top-2 right-2 rounded-full  bg-web-background p-2">
           {wish ? (
             <button onClick={removeWish}>
-              <HeartFilled className="text-red-500 fill-red-500 " />
+               <HeartFilled className="text-red-500 fill-red-500" />
             </button>
           ) : (
             <button onClick={addWish}>
