@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import React from "react";
 import { Routes, Route, useMatch, useLocation } from "react-router-dom";
 import NavBar from "./components/user/NavBar";
