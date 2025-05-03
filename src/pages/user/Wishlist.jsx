@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import apiClient from "../../api/axios";
 import Loading from "../../components/basic components/Loading";
 import BookCard from "../../components/user/home/BookCard";
+import { AppContext } from "../../context/AppContext";
 
 const Wishlist = () => {
-  const [books, setBooks] = useState("");
-  const fetchBooks = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const { data } = await apiClient.get("/book/getWishlist", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(data.data);
-      setBooks(data.data);
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchBooks();
-  }, []);
-
-  return books ? (
-    <div className="px-24">
+  const { fetchWishlist, wishlist } = useContext(AppContext);
+useEffect(()=> {
+    fetchWishlist();
+},[])
+  return wishlist ? (
+    <div className="px-24 bg-web-background">
       <h1 className="font-semibold text-3xl py-4 ">Your Wishlist</h1>
 
       <div className="flex flex-wrap justify-start gap-6">
-        {books.map((book) => (
+        {wishlist.map((book) => (
           <BookCard key={book.bookId} book={book} />
         ))}
       </div>
