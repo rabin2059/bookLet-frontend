@@ -10,6 +10,7 @@ import AddBooks from "./pages/admin/AddBooks";
 import EditBooks from "./pages/admin/EditBooks";
 import BookDetail from "./pages/admin/BookDetails";
 import Wishlist from "./pages/user/wishlist";
+import BookList from "./pages/user/Books";
 
 const App = () => {
   const isAdminRoute = useMatch("/admin/*");
@@ -26,6 +27,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist/>} />
+          <Route path="/books" element={<BookList/>} />
+          <Route path="/bookDetails/:bookId" element={<BookDetail/>} />
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/books" element={<AdminBook />} />

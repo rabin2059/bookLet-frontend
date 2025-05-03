@@ -3,6 +3,7 @@ import { Heart as HeartIcon, Heart as HeartFilled, Star } from "lucide-react";
 import images from "../../../assets/assets";
 import apiClient from "../../../api/axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   const [wish, setWish] = useState(false);
@@ -11,13 +12,13 @@ const BookCard = ({ book }) => {
     try {
       const token = localStorage.getItem("token");
       const bookId = book.bookId;
-      console.log(bookId)
+      console.log(bookId);
       const { data } = await apiClient.get(`/book/checkWishlist/${bookId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-console.log(data)
+      console.log(data);
       if (data.status) {
         setWish(true);
       }
@@ -42,7 +43,7 @@ console.log(data)
       );
 
       if (data.statusCode == 200) {
-        toast.success("Bookmarked Successfully")
+        toast.success("Bookmarked Successfully");
         checkWish();
       }
     } catch (error) {
@@ -67,23 +68,24 @@ console.log(data)
       );
       setWish(false);
       if (data.statusCode == 200) {
-        toast.success("Removed from Wishlist")
+        toast.success("Removed from Wishlist");
         checkWish();
       }
     } catch (error) {
       console.error("Error removing from wishlist:", error);
       toast.error("Failed to remove from wishlist");
     }
-  }
+  };
 
   useEffect(() => {
     checkWish();
   }, []);
 
-
-
   return (
-    <div className="flex flex-col w-[255px] pb-8">
+    <Link
+      to={`/bookDetails/${book.bookId}`}
+      className="flex flex-col w-[255px] pb-8"
+    >
       {/* Book Cover with Heart Icon */}
       <div className="relative mb-2">
         <img
@@ -91,22 +93,17 @@ console.log(data)
           alt={book.title}
           className="w-full h-[386px] object-cover rounded-md"
         />
-        <div
-          className="absolute top-2 right-2 rounded-full  bg-web-background p-2"
-        >
-
+        <div className="absolute top-2 right-2 rounded-full  bg-web-background p-2">
           {wish ? (
             <button onClick={removeWish}>
-               <HeartFilled className="text-red-500 fill-red-500 " />
+              <HeartFilled className="text-red-500 fill-red-500 " />
             </button>
           ) : (
-            <button
-            onClick={addWish}
-            >
-            <HeartIcon />
-        </button>
+            <button onClick={addWish}>
+              <HeartIcon />
+            </button>
           )}
-          </div>
+        </div>
       </div>
 
       {/* Rating */}
@@ -142,7 +139,7 @@ console.log(data)
         Add To Cart
         <img className="h-[28px]" src={images.addtoCart} alt="" />
       </button>
-    </div>
+    </Link>
   );
 };
 

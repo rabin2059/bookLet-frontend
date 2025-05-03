@@ -25,7 +25,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full sticky top-0 z-50 bg-web-background">
       {/* Top promotion bar */}
       <div className="w-full bg-web-secondary text-web-primary py-4 text-center">
         <div className="container bg-web-secondary mx-auto flex items-center justify-center">
@@ -77,13 +77,16 @@ const NavBar = () => {
               onMouseEnter={() => setCategoryDropdownOpen(true)}
               onMouseLeave={() => setCategoryDropdownOpen(false)}
             >
-              <NavLink to="/course" className={({ isActive }) =>
-                `flex items-center py-2 px-3 text-l font-bold transition-colors ${
-                  isActive
-                    ? "bg-gray-700 text-web-primary rounded-full px-5"
-                    : "text-gray-700 hover:text-gray-900"
-                }`
-              }>
+              <NavLink
+                to="/books"
+                className={({ isActive }) =>
+                  `flex items-center py-2 px-3 text-l font-bold transition-colors ${
+                    isActive
+                      ? "bg-gray-700 text-web-primary rounded-full px-5"
+                      : "text-gray-700 hover:text-gray-900"
+                  }`
+                }
+              >
                 Books
                 <ChevronDown className="w-4 h-4 ml-1" />
               </NavLink>
