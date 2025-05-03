@@ -13,7 +13,7 @@ const BookSection = () => {
       console.log(data);
       const sortedBooks = data.data
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        .slice(0, 6);
+        .slice(0, 5);
       console.log(sortedBooks);
       setBooks(sortedBooks);
     } catch (error) {
@@ -38,7 +38,7 @@ const BookSection = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-wrap justify-start gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mt-5">
         {books.map((book) => (
           <BookCard key={book.bookId} book={book} />
         ))}

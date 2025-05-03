@@ -21,10 +21,12 @@ console.log(data)
       if (data.status) {
         setWish(true);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error checking wishlist:", error);
+    }
   };
 
-  const addWish = async ({}) => {
+  const addWish = async () => {
     try {
       const BookId = book.bookId;
       const token = localStorage.getItem("token");
@@ -43,29 +45,42 @@ console.log(data)
         toast.success("Bookmarked Successfully")
         checkWish();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+      toast.error("Failed to add to wishlist");
+    }
   };
+
+  const removeWish = async () => {
+    try {
+      const BookId = book.bookId;
+      const token = localStorage.getItem("token");
+      const { data } = await apiClient.put(
+        `/book/remove/${BookId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setWish(false);
+      if (data.statusCode == 200) {
+        toast.success("Removed from Wishlist")
+        checkWish();
+      }
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
+      toast.error("Failed to remove from wishlist");
+    }
+  }
 
   useEffect(() => {
     checkWish();
-  }, [book]);
+  }, []);
 
-  // const addWish = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     const { data } = await apiClient.post("/book/addWishlist", { bookId: book.bookId }, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
 
-  //     if (data.statusCode === 200) {
-  //       setWish(true);
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to add to wishlist:", error);
-  //   }
-  // };
 
   return (
     <div className="flex flex-col w-[255px] pb-8">
@@ -76,16 +91,22 @@ console.log(data)
           alt={book.title}
           className="w-full h-[386px] object-cover rounded-md"
         />
-        <button
-          onClick={addWish}
-          className="absolute top-2 right-2 rounded-full p-1"
+        <div
+          className="absolute top-2 right-2 rounded-full  bg-web-background p-2"
         >
+
           {wish ? (
-            <HeartFilled className="text-red-500 fill-red-500" />
+            <button onClick={removeWish}>
+               <HeartFilled className="text-red-500 fill-red-500 " />
+            </button>
           ) : (
+            <button
+            onClick={addWish}
+            >
             <HeartIcon />
-          )}
         </button>
+          )}
+          </div>
       </div>
 
       {/* Rating */}
