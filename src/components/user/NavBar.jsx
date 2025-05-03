@@ -84,7 +84,7 @@ const NavBar = () => {
                     : "text-gray-700 hover:text-gray-900"
                 }`
               }>
-                Course
+                Books
                 <ChevronDown className="w-4 h-4 ml-1" />
               </NavLink>
               {categoryDropdownOpen && (
