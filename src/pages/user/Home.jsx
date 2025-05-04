@@ -9,11 +9,10 @@ const Home = () => {
   return (
       <>
     <div className="bg-web-background px-24">
-      <HeroSection />
-      <GenreSection />
-      <BookSection />
-
-      <DealSection />
+      <HeroSection/>
+      <GenreSection/>
+      <BookSection/>
+      <DealSection/>
     </div>
       </>
   );
