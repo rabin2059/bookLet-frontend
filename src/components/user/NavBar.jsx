@@ -1,18 +1,47 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { ChevronDown, CircleUserRound, Heart } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  CircleUserRound,
+  Heart,
+  LogIn,
+  LogOut,
+  ShoppingBag,
+  ShoppingCart,
+  User,
+} from "lucide-react";
 import images from "../../assets/assets";
 import SignUp from "../user/auth/SignUpSection";
 import SignIn from "../user/auth/SignInSection";
 import { AppContext } from "../../context/AppContext";
+import { toast } from "react-toastify";
+import apiClient from "../../api/axios";
 
 const NavBar = () => {
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
-
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { cart } = useContext(AppContext) || { cart: [] };
+
+  const getBanner = async () => {
+    try {
+      const { data } = await apiClient.get("/announcement/active");
+      if (!data.active) {
+        setAnnouncement("");
+      }
+      setAnnouncement(data);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getBanner();
+  }, []);
 
   useEffect(() => {
     const checkLogin = () => {
@@ -26,30 +55,56 @@ const NavBar = () => {
     return () => window.removeEventListener("storage", checkLogin);
   }, []);
 
+  // Add this useEffect to your NavBar component to disable body scrolling when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [menuOpen]);
+
+  // Also add a ref to close the menu when clicking outside
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="w-full sticky top-0 z-50 bg-web-background">
-      {/* Top promotion bar */}
-      <div className="w-full bg-web-secondary text-web-primary py-4 text-center">
-        <div className="container bg-web-secondary mx-auto flex items-center justify-center">
-          <span className="text-md text-white bg-web-secondary">
-            Get a 80% off on Purchase Rs 2000
-          </span>
-          <NavLink
-            to="/shop"
-            className="text-web-primary bg-web-secondary font-bold hover:text-yellow-200 ml-1 inline-flex items-center underline"
-          >
-            Shop Now
-            <img
-              className="w-[16px] bg-web-secondary ml-3"
-              src={images.arrow}
-              alt=""
-            />
-          </NavLink>
+      
+      {/* Top promotion bar (only show if there is an announcement) */}
+      {announcement?.message && (
+        <div className={`w-full ${announcement.color} text-web-primary py-4 text-center`}>
+          <div className={`container ${announcement.color} mx-auto flex items-center justify-center`}>
+            <span className={`text-md text-white ${announcement.color}`}>
+              {announcement.message}
+            </span>
+            <NavLink
+              to="/shop"
+              className={`${announcement.textColor} ${announcement.color} font-bold hover:text-yellow-200 ml-2 inline-flex items-center underline`}
+            >
+              Shop Now
+              <ArrowRight className={`w-[20px] ${announcement.textColor} ml-1`}/>
+            </NavLink>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main Navigation */}
-      <div className="container mx-auto py-4 px-4 md:px-0">
+      <div className="w-full py-4 pl-24">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
@@ -246,54 +301,126 @@ const NavBar = () => {
             </NavLink>
           </div>
 
-          {/* Right side icons */}
-          <div className="flex items-center space-x-4">
-            <NavLink
-              to="/cart"
-              className="relative p-2 bg-web-secondary rounded-full"
+          {/* Right side icons - GitHub style menu */}
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-1 rounded-full flex items-center justify-center"
+              aria-expanded={menuOpen}
+              aria-label="User menu"
             >
-              <img
-                className="h-[34px] bg-transparent"
-                src={images.shoppingBag}
-                alt=""
-              />
-              <span className="absolute bottom-2 right-2 bg-orange-500 text-white text-[9px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full">
-                {cart.length}
-              </span>
-            </NavLink>
-            <NavLink
-              to="/wishlist"
-              className="p-2 rounded-full border border-gray-400"
-            >
-              <Heart className="bg-transparent h-[32px] w-[32px]" />
-            </NavLink>
-            {isLoggedIn ? (
+              <img src={images.user_icon} className="h-10" alt="" />
+            </button>
+
+            {menuOpen && (
               <>
-                <NavLink
-                  to="/profile"
-                  className="p-2 rounded-full border border-gray-400"
-                >
-                  <CircleUserRound className="bg-transparent h-[32px] w-[32px]" />
-                </NavLink>
-                <button
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("role");
-                    setIsLoggedIn(false);
-                  }}
-                  className="bg-red-500 text-white py-2 px-4 rounded-full"
-                >
-                  Logout
-                </button>
+                {/* Full-screen overlay to darken background */}
+                <div className="fixed h-[100vh]  inset-0 bg-black bg-opacity-20 z-40" />
+
+                {/* GitHub-style dropdown menu */}
+                <div className="fixed right-0 top-0 h-screen w-64 bg-web-secondary border-l border-gray-200 shadow-lg z-50 overflow-auto">
+                  {/* User info header */}
+                  <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                    <div>
+                      <div className="text-lg items-center font-semibold text-web-primary flex flex-row gap-2">
+                        <CircleUserRound className="text-web-primary h-8 w-8" />{" "}
+                        {isLoggedIn ? "John Doe" : "Guest User"}
+                      </div>
+                      <div className="text-sm text-gray-100 mt-1">
+                        {isLoggedIn
+                          ? "john.doe@example.com"
+                          : "Sign in to your account"}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setMenuOpen(false)}
+                      className="text-gray-100 hover:text-gray-700"
+                      aria-label="Close menu"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Menu sections */}
+                  <div className="py-1">
+                    {/* Account section */}
+                    <div className="px-4 py-2 text-sm font-semibold text-gray-100 uppercase tracking-wider">
+                      Account
+                    </div>
+                    <NavLink
+                      to="/profile"
+                      className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-300"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <User />
+                      Your Profile
+                    </NavLink>
+                    <NavLink
+                      to="/orders"
+                      className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <ShoppingCart />
+                      My Orders
+                    </NavLink>
+                    <NavLink
+                      to="/wishlist"
+                      className="flex flex-row gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <Heart />
+                      My Wishlist
+                    </NavLink>
+                    <NavLink
+                      to="/cart"
+                      className="flex flex-row gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <ShoppingBag />
+                      Cart
+                    </NavLink>
+                  </div>
+
+                  {/* Authentication section */}
+                  <div className="border-t border-gray-100 mt-1 py-1">
+                    {isLoggedIn ? (
+                      <button
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          localStorage.removeItem("role");
+                          setIsLoggedIn(false);
+                          setMenuOpen(false);
+                        }}
+                        className="flex flex-row gap-3 w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                      >
+                        <LogOut />
+                        Sign out
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setShowSignIn(true);
+                          setMenuOpen(false);
+                        }}
+                        className="flex flex-row gap-3 w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                      >
+                        <LogIn />
+                        Sign in
+                      </button>
+                    )}
+                  </div>
+                </div>
               </>
-            ) : (
-              <button
-                onClick={() => setShowSignIn(true)}
-                className="bg-web-primary text-l font-bold text-gray-700 py-2 border border-gray-800 px-4 rounded-full px-5 flex items-center space-x-1 transition-colors"
-              >
-                <span className="bg-transparent h-[24px]">Sign In</span>
-                <CircleUserRound className="bg-transparent" />
-              </button>
             )}
           </div>
         </div>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { BadgePercent, ChevronDown, ChevronUp } from "lucide-react";
+import { toast } from "react-toastify";
+import apiClient from "../../../api/axios";
 
 const CartSummary = ({ mergedCart }) => {
   const [showAllDiscounts, setShowAllDiscounts] = useState(false);
@@ -19,9 +21,25 @@ const CartSummary = ({ mergedCart }) => {
     mergedCart?.reduce(
       (acc, item) => acc + item.book.price * item.quantity,
       0
-    ) || 600; // Default value for demo
-  const operationFee = parseFloat((subtotal * 0.06).toFixed(2));
-  const total = subtotal + operationFee;
+    ) || 0;
+  const total = subtotal;
+
+  const handleSubmit = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await apiClient.post("/order/place", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (data.statusCode == 200) {
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="w-full max-w-sm">
@@ -34,10 +52,6 @@ const CartSummary = ({ mergedCart }) => {
           <div className="flex justify-between items-center text-sm">
             <p className="text-gray-400">Proposed total</p>
             <p className="font-bold">Rs.{subtotal}</p>
-          </div>
-          <div className="flex justify-between items-center text-sm">
-            <p className="text-gray-400">Operation Fee (6%)</p>
-            <p className="font-bold">Rs.{operationFee}</p>
           </div>
 
           {/* Divider */}
@@ -106,7 +120,10 @@ const CartSummary = ({ mergedCart }) => {
             )}
 
             {/* Order Button - Slightly smaller but still prominent */}
-            <button className="w-full bg-web-primary py-3 font-bold text-lg rounded-lg mt-4">
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-web-primary py-3 font-bold text-lg rounded-lg mt-4"
+            >
               Order
             </button>
           </div>
