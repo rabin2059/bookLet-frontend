@@ -26,7 +26,7 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div className="md:w-64 w-16 bg-web-third border-r min-h-screen text-base border-gray-500 pb-2 flex flex-col">
+    <div className="md:w-64 w-16 bg-web-third border-r min-h-screen text-base  pb-2 flex flex-col">
       <div className="flex flex-row h-20 items-center gap-3 bg-web-secondary">
         <div className="bg-white rounded-full p-1 ml-5">
           <img className="h-[40px]" src={images.logo} alt="logo" />

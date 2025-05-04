@@ -9,7 +9,7 @@ const Admin = () => {
         <Sidebar />
       </div>
       <div className="flex-1 flex flex-col">
-        <div className="sticky top-0 z-10 bg-white shadow-md border-b border-gray-200">
+        <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
 
         <HeaderSection />
         </div>

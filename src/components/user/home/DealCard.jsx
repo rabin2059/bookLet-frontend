@@ -94,14 +94,14 @@ const DealCard = ({ book }) => {
   }, []);
 
   return (
-    <div className="bg-[#435058]/10 rounded-3xl px-[23px] py-[42px]">
-      <div className="flex flex-row pb-8">
-        <div className="relative mr-2">
+    <div className="bg-[#435058]/10 rounded-3xl px-[23px] py-[30px]">
+      <div className="flex flex-row">
+        <div className="relative mr-4">
           <Link to={`/bookDetails/${book.bookId}`}>
             <img
               src={book.imageUrl}
               alt={book.title}
-              className="h-[310px] w-[203px] object-cover rounded-xl"
+              className="h-[300px] w-[203px] object-cover rounded-xl"
             />
           </Link>
           <div className="absolute top-2 right-2 rounded-full h-10 bg-web-background p-2">
@@ -118,43 +118,43 @@ const DealCard = ({ book }) => {
         </div>
 
         <div className="flex flex-col justify-between">
-          <div className="mt-4">
+          <div className="mt-1">
             {/* Author */}
-            <div className="text-xs text-gray-800 font-thin mb-1">By {book.author}</div>
+            <div className="text-sm text-gray-800 font-thin mb-1">By {book.author}</div>
 
             {/* Title */}
             <Link to={`/bookDetails/${book.bookId}`}>
-              <h3 className="font-bold text-base mb-1 w-[200px] overflow-hidden whitespace-nowrap text-ellipsis">
+              <h3 className="font-semibold text-2xl mb-1 w-[200px] overflow-hidden whitespace-nowrap text-ellipsis">
                 {book.title}
               </h3>
             </Link>
 
             {/* Price */}
             <div className="mb-2">
-              <div className="text-xs text-gray-500 line-through">
+              <div className="text-sm text-gray-500 line-through">
                 Rs {book.price} mrp
               </div>
               <div className="flex justify-between items-center">
-                <span className="font-bold">
+                <span className="font-bold text-xl">
                   Rs {book.price - (book.discount * book.price) / 100}
                 </span>
               </div>
             </div>
 
             {/* Rating */}
-            <div className="flex flex-row items-center gap-2 mb-1">
-              <div className="flex items-center justify-center bg-web-primary border border-gray-500 rounded-full p-1 h-6 w-14">
+            <div className="flex flex-row items-center gap-4 mb-1">
+              <div className="flex items-center justify-center bg-web-primary border border-gray-500 rounded-full px-2 h-8">
                 <Star className="h-4" />
-                <span className="text-xs font-bold ml-0.5">4.5</span>
+                <span className="text-sm font-bold ml-0.5">4.5</span>
               </div>
-              <span className="text-gray-500 text-sm">140 Reviews</span>
+              <span className="text-gray-500 text-md">140 Reviews</span>
             </div>
           </div>
 
           {/* Add to Cart Button */}
           <button
             onClick={addCart}
-            className="bg-gray-600 text-xl font-semibold text-white py-2 px-4 rounded-full flex items-center justify-center gap-2"
+            className="bg-gray-600 text-xl font-semibold text-white py-3 mb-2 px-4 rounded-full flex items-center justify-center gap-2"
           >
             Add To Cart
             <img className="h-[28px]" src={images.addtoCart} alt="" />

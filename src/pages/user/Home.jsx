@@ -15,7 +15,6 @@ const Home = () => {
 
       <DealSection />
     </div>
-      <Footer/>
       </>
   );
 };

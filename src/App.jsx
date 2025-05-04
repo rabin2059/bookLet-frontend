@@ -13,6 +13,7 @@ import Wishlist from "./pages/user/wishlist";
 import BookList from "./pages/user/Books";
 import Cart from "./pages/user/Cart";
 import Banner from "./pages/admin/Banner";
+import Footer from "./components/Footer";
 
 const App = () => {
   const isAdminRoute = useMatch("/admin/*");
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/admin/books/view/:bookId" element={<BookDetail />} />
         </Route>
       </Routes>
+      {!isAdminRoute && <Footer />}
     </div>
   );
 };

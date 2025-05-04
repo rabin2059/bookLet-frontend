@@ -21,11 +21,14 @@ const BookList = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
 
-      const { data } = await apiClient.get(`/book/all?page=${page}&pageSize=${pageSize}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const { data } = await apiClient.get(
+        `/book/all?page=${page}&pageSize=${pageSize}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setAllBooks(data.data); // books array
       setTotalPages(data.pagination?.totalPages || 1);
@@ -45,7 +48,7 @@ const BookList = () => {
     <Loading />
   ) : (
     <div className="px-24 bg-web-background min-h-screen">
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row gap-14 justify-between">
         <FilteringSection
           selectedGenres={selectedGenres}
           setSelectedGenres={setSelectedGenres}
@@ -90,7 +93,6 @@ const BookList = () => {
           </div>
         </div>
       </div>
-<Footer/>
     </div>
   );
 };

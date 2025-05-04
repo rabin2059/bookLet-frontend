@@ -20,8 +20,8 @@ const Cart = () => {
 
   return cart ? (
     <div className="bg-web-background px-24">
-      <h1 className="text-4xl font-bold">Cart</h1>
-      <div className="flex flex-row justify-between">
+      <h1 className="text-4xl mb-4 pl-20 font-bold">Cart</h1>
+      <div className="flex flex-row justify-between px-28">
         <div className="flex flex-col gap-2">
           {mergedCart.map((carts) => (
             <CartCard key={carts.bookId} carts={carts} />

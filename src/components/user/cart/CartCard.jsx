@@ -16,32 +16,57 @@ const CartCard = ({ carts }) => {
       updateCartQuantity(carts.bookId, carts.quantity - 1);
     }
   };
+
   return carts ? (
-    <div>
-      <div className="flex flex-row justify-between border px-6 py-6 gap-24 rounded-xl">
-        <div className="flex flex-row gap-10">
-          <img className="w-[196px] h-[140px]" src={images.book2} alt="" />
+    <div className="w-full mb-4">
+      <div className="flex flex-row gap-32 items-center justify-between border border-gray-200 px-5 py-4 rounded-xl">
+        {/* Book Info Section */}
+        <div className="flex items-center gap-6">
+          <img 
+            className="w-32 h-24 object-cover rounded" 
+            src={images.book2} 
+            alt={carts.book.title} 
+          />
           <div>
-            <h1 className="text-[35px] font-semibold">{carts.book.title}</h1>
-            <p className="text-3xl font-thin">by {carts.book.author}</p>
+            <h1 className="text-xl font-semibold mb-1">{carts.book.title}</h1>
+            <p className="text-gray-600">by {carts.book.author}</p>
           </div>
         </div>
-        <div className="flex flex-row gap-4 items-center">
-          <div className="flex items-center gap-2 border px-3 py-1 rounded-md w-fit">
-            <button onClick={handleDecrease} className="text-xl font-semibold">
+        
+        {/* Actions Section */}
+        <div className="flex items-center gap-6">
+          {/* Quantity Controls */}
+          <div className="flex items-center gap-1 border border-gray-300 px-3 py-1 rounded-md">
+            <button 
+              onClick={handleDecrease} 
+              className="text-lg font-medium w-6 h-6 flex items-center justify-center"
+            >
               -
             </button>
-            <span className="w-4 text-center">{carts.quantity}</span>
-            <button onClick={handleIncrease} className="text-xl font-semibold">
+            <span className="w-6 text-center">{carts.quantity}</span>
+            <button 
+              onClick={handleIncrease} 
+              className="text-lg font-medium w-6 h-6 flex items-center justify-center"
+            >
               +
             </button>
           </div>
-          <div className="w-[70px] ">NRS.{carts.book.price}</div>
-          <div className="w-24 ">
-            <p>Total</p>
-            <p>NPS.{carts.book.price * carts.quantity}</p>
+          
+          {/* Price Info */}
+          <div className="w-20 text-right">
+            <p className="font-medium">NRS.{carts.book.price}</p>
           </div>
-          <Trash2Icon />
+          
+          {/* Total Info */}
+          <div className="w-24 text-right">
+            <p className="text-sm text-gray-500">Total</p>
+            <p className="font-medium">NRS.{carts.book.price * carts.quantity}</p>
+          </div>
+          
+          {/* Delete Button */}
+          <button className="ml-2 p-1 hover:text-red-500 transition-colors">
+            <Trash2Icon size={20} />
+          </button>
         </div>
       </div>
     </div>
