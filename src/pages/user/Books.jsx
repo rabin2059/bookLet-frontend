@@ -3,6 +3,7 @@ import FilteringSection from "../../components/user/book list/FilterSection";
 import Loading from "../../components/basic components/Loading";
 import BookCard from "../../components/user/home/BookCard";
 import apiClient from "../../api/axios";
+import Footer from "../../components/Footer";
 
 const BookList = () => {
   const [selectedGenres, setSelectedGenres] = useState("");
@@ -89,6 +90,7 @@ const BookList = () => {
           </div>
         </div>
       </div>
+<Footer/>
     </div>
   );
 };

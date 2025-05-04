@@ -100,7 +100,7 @@ const BookCard = ({ book }) => {
           <img
             src={book.imageUrl}
             alt={book.title}
-            className="w-full h-[386px] object-cover rounded-md"
+            className="w-full h-[386px] object-cover rounded-[20px]"
           />
         </Link>
         <div className="absolute top-2 right-2 rounded-full  bg-web-background p-2">
