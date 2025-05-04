@@ -8,7 +8,7 @@ import { AppContext } from "../../../context/AppContext";
 
 const BookCard = ({ book }) => {
   const [wish, setWish] = useState(false);
-  const { addToCart, fetchWishlist, setWishlist } = useContext(AppContext);
+  const { addToCart, fetchWishlist, setWishlist, setShowSignIn } = useContext(AppContext);
 
   const token = localStorage.getItem("token");
   const bookId = book.bookId;
@@ -28,7 +28,11 @@ const BookCard = ({ book }) => {
         setWish(false);
       }
     } catch (error) {
-      console.error("Error checking wishlist:", error);
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      } else {
+        console.error("Error checking wishlist:", error);
+      }
     }
   };
 
@@ -61,8 +65,12 @@ const BookCard = ({ book }) => {
         fetchWishlist();
       }
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
-      toast.error("Failed to add to wishlist");
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      } else {
+        console.error("Error adding to wishlist:", error);
+        toast.error("Failed to add to wishlist");
+      }
     }
   };
 
@@ -84,8 +92,12 @@ const BookCard = ({ book }) => {
         setWishlist((prev) => prev.filter((b) => b.bookId !== bookId));
       }
     } catch (error) {
-      console.error("Error removing from wishlist:", error);
-      toast.error("Failed to remove from wishlist");
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      } else {
+        console.error("Error removing from wishlist:", error);
+        toast.error("Failed to remove from wishlist");
+      }
     }
   };
 
@@ -103,10 +115,10 @@ const BookCard = ({ book }) => {
             className="w-full h-[386px] object-cover rounded-md"
           />
         </Link>
-        <div className="absolute top-2 right-2 rounded-full  bg-web-background p-2">
+        <div className="absolute top-2 right-2 rounded-full h-10 bg-web-background p-2">
           {wish ? (
             <button onClick={removeWish}>
-               <HeartFilled className="text-red-500 fill-red-500" />
+              <HeartFilled className="text-red-500 fill-red-500" />
             </button>
           ) : (
             <button onClick={addWish}>
@@ -130,12 +142,14 @@ const BookCard = ({ book }) => {
 
       {/* Title */}
       <Link to={`/bookDetails/${book.bookId}`}>
-        <h3 className="font-bold text-base mb-1">{book.title}</h3>
+        <h3 className="font-bold text-base mb-1 w-[250px] overflow-hidden whitespace-nowrap text-ellipsis">
+          {book.title}
+        </h3>
       </Link>
 
       {/* Price */}
       <div className="mb-2">
-        <div className="text-xs text-gray-500">Rs {book.price} mrp</div>
+        <div className="text-xs text-gray-500 line-through">Rs {book.price} mrp</div>
         <div className="flex justify-between items-center">
           <span className="font-bold">
             Rs {book.price - (book.discount * book.price) / 100}
@@ -149,7 +163,7 @@ const BookCard = ({ book }) => {
       {/* Add to Cart Button */}
       <button
         onClick={addCart}
-        className="bg-gray-600 text-xl font-semibold text-white py-2 px-4 rounded-md flex items-center justify-center gap-2"
+        className="bg-gray-600 text-xl font-semibold text-white py-2 px-4 rounded-full flex items-center justify-center gap-2"
       >
         Add To Cart
         <img className="h-[28px]" src={images.addtoCart} alt="" />

@@ -8,6 +8,7 @@ export const AppContextProvider = (props) => {
   const [allBooks, setAllBooks] = useState([]);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState("");
+  const [showSignIn, setShowSignIn] = useState(false);
 
   const fetchWishlist = async () => {
     try {
@@ -20,7 +21,11 @@ export const AppContextProvider = (props) => {
       console.log(data.data);
       setWishlist(data.data);
     } catch (error) {
-      console.error("Error fetching books:", error);
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      } else {
+        console.error("Error fetching books:", error);
+      }
     }
   };
 
@@ -33,7 +38,11 @@ export const AppContextProvider = (props) => {
       );
       setAllBooks(sortedBooks);
     } catch (error) {
-      console.error("Error fetching books:", error);
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      } else {
+        console.error("Error fetching books:", error);
+      }
     }
   };
 
@@ -51,7 +60,19 @@ export const AppContextProvider = (props) => {
         toast.success("Added to Cart");
         getCart();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      }
+    }
+  };
+
+  const updateCartQuantity = (bookId, newQuantity) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.bookId === bookId ? { ...item, quantity: newQuantity } : item
+      )
+    );
   };
 
   const getCart = async () => {
@@ -67,9 +88,14 @@ export const AppContextProvider = (props) => {
       if (data.statusCode != 200) {
         toast.error("Failed to fetch data");
       }
+      console.log(data.data)
 
       setCart(data.data);
-    } catch (error) {}
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setShowSignIn(true);
+      }
+    }
   };
 
   useEffect(() => {
@@ -85,7 +111,10 @@ export const AppContextProvider = (props) => {
     setWishlist,
     getCart,
     addToCart,
-    fetchWishlist
+    fetchWishlist,
+    updateCartQuantity,
+    showSignIn,
+    setShowSignIn
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

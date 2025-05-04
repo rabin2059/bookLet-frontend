@@ -1,4 +1,4 @@
-import { ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import React from "react";
 import { Routes, Route, useMatch, useLocation } from "react-router-dom";
 import NavBar from "./components/user/NavBar";
@@ -11,6 +11,8 @@ import EditBooks from "./pages/admin/EditBooks";
 import BookDetail from "./pages/admin/BookDetails";
 import Wishlist from "./pages/user/wishlist";
 import BookList from "./pages/user/Books";
+import Cart from "./pages/user/Cart";
+import Banner from "./pages/admin/Banner";
 
 const App = () => {
   const isAdminRoute = useMatch("/admin/*");
@@ -26,15 +28,17 @@ const App = () => {
       {!isAdminRoute && <NavBar />}
       <Routes>
         <Route path="/" element={<Home />} />
-          <Route path="/wishlist" element={<Wishlist/>} />
-          <Route path="/books" element={<BookList/>} />
-          <Route path="/bookDetails/:bookId" element={<BookDetail/>} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/books" element={<BookList />} />
+        <Route path="/bookDetails/:bookId" element={<BookDetail />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/books" element={<AdminBook />} />
           <Route path="/admin/orders" element={<AdminDashboard />} />
           <Route path="/admin/customers" element={<AdminDashboard />} />
           <Route path="/admin/staff" element={<AdminDashboard />} />
+          <Route path="/admin/banners" element={<Banner />} />
           <Route path="/admin/reports" element={<AdminDashboard />} />
           <Route path="/admin/settings" element={<AdminDashboard />} />
           <Route path="/admin/books/addBooks" element={<AddBooks />} />
