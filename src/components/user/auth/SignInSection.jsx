@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { X, Eye, EyeOff } from "lucide-react";
 import apiClient from "../../../api/axios";
 import { toast } from "react-toastify";
+import { AppContext } from "../../../context/AppContext";
 
 const SignInSection = ({ onClose, setShowSignUp }) => {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { getCart } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     try {
@@ -26,6 +28,7 @@ const SignInSection = ({ onClose, setShowSignUp }) => {
       if (data.statusCode == 200) {
         toast.success(data.message || "Login successful !!!!!");
         onClose();
+        getCart();
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.user.role);
         window.dispatchEvent(new Event("storage"));

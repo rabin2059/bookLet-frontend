@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
+import genreIcons from "../../basic components/GenreIcons"
 
 const GenreSection = () => {
   const { allBooks } = useContext(AppContext) || { allBooks: [] };
@@ -16,9 +17,12 @@ const GenreSection = () => {
         )
           .slice(0, 6)
           .map(([genre, count]) => (
-            <div key={genre} className="p-4 text-left">
-              <p className="font-semibold text-lg">{genre}</p>
-              <p className="text-sm text-gray-500">{count} Items</p>
+            <div className="flex flex-row items-center">
+                <img src={genreIcons[genre] || genreIcons["Fiction"]} alt={genre} className="w-12 h-12 object-contain" />
+              <div key={genre} className="p-4 text-left">
+                <p className="font-semibold text-lg">{genre}</p>
+                <p className="text-sm text-gray-500">{count} Items</p>
+              </div>
             </div>
           ))}
       </div>

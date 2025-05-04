@@ -8,6 +8,7 @@ import {
   Users,
   ListCheck,
   Settings,
+  ScrollText
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import images from "../../assets/assets";
@@ -19,6 +20,7 @@ const AdminSidebar = () => {
     { name: "Orders", path: "/admin/orders", icons: ShoppingBag },
     { name: "Customers", path: "/admin/customers", icons: User },
     { name: "Staff", path: "/admin/staff", icons: Users },
+    { name: "Banners", path: "/admin/banners", icons: ScrollText },
     { name: "Reports", path: "/admin/reports", icons: ListCheck },
     { name: "Settings", path: "/admin/settings", icons: Settings },
   ];
