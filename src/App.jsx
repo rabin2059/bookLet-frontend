@@ -13,7 +13,7 @@ import Wishlist from "./pages/user/wishlist";
 import BookList from "./pages/user/Books";
 import Cart from "./pages/user/Cart";
 import Banner from "./pages/admin/Banner";
-import Footer from "./components/Footer";
+import Footer from "./components/user/Footer";
 
 const App = () => {
   const isAdminRoute = useMatch("/admin/*");

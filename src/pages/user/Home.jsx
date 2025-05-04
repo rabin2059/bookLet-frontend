@@ -2,7 +2,6 @@ import React from "react";
 import HeroSection from "../../components/user/home/HeroSection";
 import BookSection from "../../components/user/home/BookSection";
 import GenreSection from "../../components/user/home/GenreSection";
-import Footer from "../../components/Footer";
 import DealSection from "../../components/user/home/DealSection";
 
 const Home = () => {
