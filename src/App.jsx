@@ -4,6 +4,7 @@ import { Routes, Route, useMatch, useLocation } from "react-router-dom";
 import NavBar from "./components/user/NavBar";
 import Home from "./pages/user/Home";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminOrder from "./pages/admin/AdminOrder";
 import Admin from "./pages/admin/Admin";
 import AdminBook from "./pages/admin/AdminBook";
 import AddBooks from "./pages/admin/AddBooks";
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/admin" element={<Admin />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/books" element={<AdminBook />} />
-          <Route path="/admin/orders" element={<AdminDashboard />} />
+          <Route path="/admin/orders" element={<AdminOrder />} />
           <Route path="/admin/customers" element={<AdminDashboard />} />
           <Route path="/admin/staff" element={<AdminDashboard />} />
           <Route path="/admin/reports" element={<AdminDashboard />} />
