@@ -15,19 +15,26 @@ import BookList from "./pages/user/Books";
 import Cart from "./pages/user/Cart";
 import Banner from "./pages/admin/Banner";
 import Footer from "./components/user/Footer";
+import Staff from "./pages/staff/Staff";
+import StaffDashboard from "./pages/staff/StaffDashboard";
 
 const App = () => {
   const isAdminRoute = useMatch("/admin/*");
+  const isStaffRoute = useMatch("/staff/*");
   const location = useLocation();
   const role = localStorage.getItem("role");
   if (role === "Admin" && !location.pathname.startsWith("/admin")) {
     window.location.href = "/admin";
     return null;
   }
+  if (role === "Staff" && !location.pathname.startsWith("/staff")) {
+    window.location.href = "/staff";
+    return null;
+  }
   return (
     <div className="text-default min-h-screen bg-white">
       <ToastContainer />
-      {!isAdminRoute && <NavBar />}
+      {!isAdminRoute && !isStaffRoute && <NavBar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/wishlist" element={<Wishlist />} />
@@ -47,8 +54,11 @@ const App = () => {
           <Route path="/admin/books/edit/:bookId" element={<EditBooks />} />
           <Route path="/admin/books/view/:bookId" element={<BookDetail />} />
         </Route>
+        <Route path="/staff" element={<Staff />}>
+          <Route path="/staff" element={<StaffDashboard />} />
+        </Route>
       </Routes>
-      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && !isStaffRoute && <Footer />}
     </div>
   );
 };

@@ -318,11 +318,11 @@ const NavBar = () => {
                 <div className="fixed h-[100vh]  inset-0 bg-black bg-opacity-20 z-40" />
 
                 {/* GitHub-style dropdown menu */}
-                <div className="fixed right-0 top-0 h-screen w-64 bg-web-secondary border-l border-gray-200 shadow-lg z-50 overflow-auto">
+                <div className="fixed right-0 top-0 h-screen w-64 bg-web-secondary rounded-l-lg border-l border-gray-200 shadow-lg z-50 overflow-auto">
                   {/* User info header */}
                   <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
                     <div>
-                      <div className="text-lg items-center font-semibold text-web-primary flex flex-row gap-2">
+                      <div className="text-lg items-center font-semibold text-gray-200 flex flex-row gap-2">
                         <CircleUserRound className="text-web-primary h-8 w-8" />{" "}
                         {isLoggedIn ? "John Doe" : "Guest User"}
                       </div>
@@ -334,12 +334,12 @@ const NavBar = () => {
                     </div>
                     <button
                       onClick={() => setMenuOpen(false)}
-                      className="text-gray-100 hover:text-gray-700"
+                      className="text-gray-100 hover:text-web-primary"
                       aria-label="Close menu"
                     >
                       <svg
-                        width="16"
-                        height="16"
+                        width="19"
+                        height="18"
                         viewBox="0 0 16 16"
                         fill="currentColor"
                       >

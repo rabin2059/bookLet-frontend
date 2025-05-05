@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { PlusCircle } from "lucide-react";
 import BannerAddModal from "../../components/admin/banner/AddBanner";
-import BannerDeleteModal from "../../components/admin/banner/DeleteBanner";
-import BannerPreviewModal from "../../components/admin/banner/PreviewBanner";
 import BannerTable from "../../components/admin/banner/BannerTable";
 import apiClient from "../../api/axios";
+import PreviewBanner from "../../components/admin/banner/PreviewBanner";
+import DeleteBanner from "../../components/admin/banner/DeleteBanner";
 
 const colorOptions = [
   {
@@ -258,7 +258,7 @@ const Banner = () => {
         colorOptions={colorOptions}
       />
 
-      <BannerDeleteModal
+      <DeleteBanner
         banner={isDeleteOpen ? currentBanner : null}
         onCancel={() => {
           setIsDeleteOpen(false);
@@ -267,7 +267,7 @@ const Banner = () => {
         onConfirm={confirmDelete}
       />
 
-      <BannerPreviewModal
+      <PreviewBanner
         banner={previewBanner}
         onClose={() => setPreviewBanner(null)}
         getColorClass={getColorClass}
