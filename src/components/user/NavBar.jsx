@@ -318,7 +318,7 @@ const NavBar = () => {
                 <div className="fixed h-[100vh]  inset-0 bg-black bg-opacity-20 z-40" />
 
                 {/* GitHub-style dropdown menu */}
-                <div className="fixed right-0 top-0 h-screen w-64 bg-web-secondary rounded-l-lg border-l border-gray-200 shadow-lg z-50 overflow-auto">
+                <div className="fixed right-0 top-0 h-screen w-80 bg-web-secondary shadow-lg z-50 overflow-auto">
                   {/* User info header */}
                   <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
                     <div>
@@ -352,12 +352,13 @@ const NavBar = () => {
                   </div>
 
                   {/* Menu sections */}
-                  <div className="py-1">
+                  <div className="py-1 pb-4">
                     {/* Account section */}
                     <div className="px-4 py-2 text-sm font-semibold text-gray-100 uppercase tracking-wider">
                       Account
                     </div>
-                    <NavLink
+                  <div className="flex flex-col gap-4 ">
+                  <NavLink
                       to="/profile"
                       className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-300"
                       onClick={() => setMenuOpen(false)}
@@ -389,6 +390,7 @@ const NavBar = () => {
                       <ShoppingBag />
                       Cart
                     </NavLink>
+                  </div>
                   </div>
 
                   {/* Authentication section */}
