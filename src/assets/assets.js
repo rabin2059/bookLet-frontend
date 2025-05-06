@@ -8,6 +8,8 @@ import book1 from "./images/book1.png";
 import book2 from "./images/book2.png";
 import book3 from "./images/book3.png";
 import addtoCart from "./images/addtocart.png";
+import banner from "./images/banner.png";
+import page from "./images/page.png";
 
 const images = {
   logo,
@@ -19,6 +21,8 @@ const images = {
   book1,
   book2,
   book3,
+  banner,
+  page,
   addtoCart,
 };
 

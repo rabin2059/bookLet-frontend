@@ -103,7 +103,7 @@ console.log(book)
       <div className="relative mb-2">
         <Link to={`/bookDetails/${book.bookId}`} state={{ book }}>
           <img
-            src={book.imageUrl}
+            src={book.imageUrl? book.imageUrl : images.book1}
             alt={book.title}
             className="w-full h-[386px] object-cover rounded-[20px]"
           />
