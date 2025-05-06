@@ -10,8 +10,10 @@ const HeroSection = () => {
   return (
     <div className="bg-[#fefdf9] py-20 px-6 pb-80 sm:px-10 lg:px-20">
     <div className="absolute inset-0 z-0">
-        <div className="w-[400px] h-[400px] bg-purple-200 blur-3xl rounded-full bottom-24 absolute top-60 left-10 opacity-40" />
-        <div className="w-[400px] h-[400px] bg-yellow-200 blur-3xl rounded-full absolute bottom-50 top-36 left-96  opacity-30" />
+
+      <img src={images.vector} alt="" className="h-[70%] absolute top-28 left-28 opacity-40" />
+        <div className="w-[400px] h-[400px] bg-purple-200 blur-3xl rounded-full bottom-24 absolute top-60 left-10 opacity-20" />
+        <div className="w-[400px] h-[400px] bg-yellow-200 blur-3xl rounded-full absolute bottom-50 top-36 left-96  opacity-20" />
       </div>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-20">
         

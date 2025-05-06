@@ -10,6 +10,7 @@ import book3 from "./images/book3.png";
 import addtoCart from "./images/addtocart.png";
 import banner from "./images/banner.png";
 import page from "./images/page.png";
+import vector from "./images/vector.png";
 
 const images = {
   logo,
@@ -20,6 +21,7 @@ const images = {
   herobook,
   book1,
   book2,
+  vector,
   book3,
   banner,
   page,
