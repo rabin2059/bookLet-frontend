@@ -3,11 +3,14 @@ import "./index.css";
 import App from "./App.jsx";
 import { AppContextProvider } from "./context/AppContext.jsx";
 import { BrowserRouter } from "react-router-dom";
+import AxiosInterceptor from "./api/axiosInterceptor.js";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AppContextProvider>
-      <App />
+      <AxiosInterceptor>
+        <App />
+      </AxiosInterceptor>
     </AppContextProvider>
   </BrowserRouter>
 );

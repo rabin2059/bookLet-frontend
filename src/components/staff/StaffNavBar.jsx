@@ -16,12 +16,8 @@ import images from "../../assets/assets";
 const StaffNavBar = () => {
   const menuItems = [
     { name: "Dashboard", path: "/staff", icons: List },
-    { name: "Books", path: "/staff/books", icons: Book },
     { name: "Orders", path: "/staff/orders", icons: ShoppingBag },
     { name: "Customers", path: "/staff/customers", icons: User },
-    { name: "Staff", path: "/staff/staff", icons: Users },
-    { name: "Banners", path: "/staff/banners", icons: ScrollText },
-    { name: "Reports", path: "/staff/reports", icons: ListCheck },
     { name: "Settings", path: "/staff/settings", icons: Settings },
   ];
 

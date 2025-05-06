@@ -8,11 +8,22 @@ export const AppContextProvider = (props) => {
   const [allBooks, setAllBooks] = useState([]);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState("");
+  const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkLogged = () => {
+    const token = localStorage.getItem("token");
+    const isLogged = !!token;
+    setIsLoggedIn(isLogged);
+    return isLogged;
+  };
 
   const fetchWishlist = async () => {
     try {
       const token = localStorage.getItem("token");
+
+      if (!token) return;
       const { data } = await apiClient.get("/book/getWishlist", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -21,11 +32,7 @@ export const AppContextProvider = (props) => {
       console.log(data.data);
       setWishlist(data.data);
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      } else {
-        console.error("Error fetching books:", error);
-      }
+      console.error("Error fetching books:", error);
     }
   };
 
@@ -38,11 +45,7 @@ export const AppContextProvider = (props) => {
       );
       setAllBooks(sortedBooks);
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      } else {
-        console.error("Error fetching books:", error);
-      }
+      console.error("Error fetching books:", error);
     }
   };
 
@@ -61,9 +64,7 @@ export const AppContextProvider = (props) => {
         getCart();
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      }
+      console.log(error.message);
     }
   };
 
@@ -78,6 +79,8 @@ export const AppContextProvider = (props) => {
   const getCart = async () => {
     try {
       const token = localStorage.getItem("token");
+
+      if (!token) return;
       const { data } = await apiClient.get("/addToCart/getcartitems", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -86,22 +89,26 @@ export const AppContextProvider = (props) => {
       });
 
       if (data.statusCode != 200) {
-        toast.error("Failed to fetch data");
+        console.log("Failed to fetch data");
       }
-      console.log(data.data)
+      console.log(data.data);
 
       setCart(data.data);
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      }
+      console.log(error.message);
     }
   };
 
   useEffect(() => {
+    if (checkLogged()) {
+      getCart();
+      fetchWishlist();
+    }
+  }, []);
+
+  useEffect(() => {
     fetchBooks();
-    getCart();
-    fetchWishlist();
+    checkLogged();
   }, []);
 
   const value = {
@@ -114,7 +121,11 @@ export const AppContextProvider = (props) => {
     fetchWishlist,
     updateCartQuantity,
     showSignIn,
-    setShowSignIn
+    setShowSignIn,
+    showSignUp,
+    setShowSignUp,
+    isLoggedIn,
+    checkLogged,
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

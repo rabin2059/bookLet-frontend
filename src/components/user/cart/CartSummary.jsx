@@ -27,17 +27,21 @@ const CartSummary = ({ mergedCart }) => {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await apiClient.post("/order/place",{}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const { data } = await apiClient.post(
+        "/order/place",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (data.statusCode == 200) {
         toast.success(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 

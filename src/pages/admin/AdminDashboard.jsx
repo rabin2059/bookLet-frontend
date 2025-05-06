@@ -9,7 +9,7 @@ const AdminDashboard = () => {
     try {
       // Fetch logic here
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -17,15 +17,30 @@ const AdminDashboard = () => {
 
   // Example data; replace with your fetch logic
   const [recentBooks, setRecentBooks] = useState([
-    { id: 1, title: "React Basics", author: "Dan Abramov", added: "2024-06-01" },
-    { id: 2, title: "Advanced JS", author: "Kyle Simpson", added: "2024-06-02" },
+    {
+      id: 1,
+      title: "React Basics",
+      author: "Dan Abramov",
+      added: "2024-06-01",
+    },
+    {
+      id: 2,
+      title: "Advanced JS",
+      author: "Kyle Simpson",
+      added: "2024-06-02",
+    },
   ]);
   const [recentOrders, setRecentOrders] = useState([
     { id: 101, customer: "Alice", date: "2024-06-03", amount: "$49.99" },
     { id: 102, customer: "Bob", date: "2024-06-04", amount: "$29.99" },
   ]);
   const [recentCustomers, setRecentCustomers] = useState([
-    { id: 201, name: "Charlie", email: "charlie@mail.com", joined: "2024-06-01" },
+    {
+      id: 201,
+      name: "Charlie",
+      email: "charlie@mail.com",
+      joined: "2024-06-01",
+    },
     { id: 202, name: "Dana", email: "dana@mail.com", joined: "2024-06-02" },
   ]);
   const [recentStaffs, setRecentStaffs] = useState([
@@ -58,7 +73,11 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="flex items-center p-5 bg-white rounded-lg shadow-md border-l-4 border-yellow-500">
-          <img src={images.user_icon} className="w-10 h-10 mr-4" alt="Customers" />
+          <img
+            src={images.user_icon}
+            className="w-10 h-10 mr-4"
+            alt="Customers"
+          />
           <div>
             <p className="text-2xl font-bold text-gray-700">{totalCustomers}</p>
             <p className="text-gray-500">Customers</p>
@@ -81,21 +100,31 @@ const AdminDashboard = () => {
             <div className="bg-blue-100 p-2 rounded-full mr-3">
               <img src={images.logo} alt="Books" className="w-7 h-7" />
             </div>
-            <h2 className="text-lg font-semibold text-gray-700">Recently Added Books</h2>
+            <h2 className="text-lg font-semibold text-gray-700">
+              Recently Added Books
+            </h2>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="bg-blue-50">
-                  <th className="px-3 py-2 text-left font-semibold text-blue-700">Title</th>
-                  <th className="px-3 py-2 text-left font-semibold text-blue-700">Author</th>
-                  <th className="px-3 py-2 text-left font-semibold text-blue-700">Added On</th>
+                  <th className="px-3 py-2 text-left font-semibold text-blue-700">
+                    Title
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-blue-700">
+                    Author
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-blue-700">
+                    Added On
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {recentBooks.length === 0 && (
                   <tr>
-                    <td colSpan={3} className="text-center text-gray-300 py-3">No recent books.</td>
+                    <td colSpan={3} className="text-center text-gray-300 py-3">
+                      No recent books.
+                    </td>
                   </tr>
                 )}
                 {recentBooks.slice(0, 5).map((book) => (
@@ -116,22 +145,34 @@ const AdminDashboard = () => {
             <div className="bg-green-100 p-2 rounded-full mr-3">
               <img src={images.arrow} alt="Orders" className="w-7 h-7" />
             </div>
-            <h2 className="text-lg font-semibold text-gray-700">Recent Orders</h2>
+            <h2 className="text-lg font-semibold text-gray-700">
+              Recent Orders
+            </h2>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="bg-green-50">
-                  <th className="px-3 py-2 text-left font-semibold text-green-700">Order ID</th>
-                  <th className="px-3 py-2 text-left font-semibold text-green-700">Customer</th>
-                  <th className="px-3 py-2 text-left font-semibold text-green-700">Date</th>
-                  <th className="px-3 py-2 text-left font-semibold text-green-700">Amount</th>
+                  <th className="px-3 py-2 text-left font-semibold text-green-700">
+                    Order ID
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-green-700">
+                    Customer
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-green-700">
+                    Date
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-green-700">
+                    Amount
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {recentOrders.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="text-center text-gray-300 py-3">No recent orders.</td>
+                    <td colSpan={4} className="text-center text-gray-300 py-3">
+                      No recent orders.
+                    </td>
                   </tr>
                 )}
                 {recentOrders.slice(0, 5).map((order) => (
@@ -153,21 +194,31 @@ const AdminDashboard = () => {
             <div className="bg-yellow-100 p-2 rounded-full mr-3">
               <img src={images.user_icon} alt="Customers" className="w-7 h-7" />
             </div>
-            <h2 className="text-lg font-semibold text-gray-700">New Customers</h2>
+            <h2 className="text-lg font-semibold text-gray-700">
+              New Customers
+            </h2>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="bg-yellow-50">
-                  <th className="px-3 py-2 text-left font-semibold text-yellow-700">Name</th>
-                  <th className="px-3 py-2 text-left font-semibold text-yellow-700">Email</th>
-                  <th className="px-3 py-2 text-left font-semibold text-yellow-700">Joined</th>
+                  <th className="px-3 py-2 text-left font-semibold text-yellow-700">
+                    Name
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-yellow-700">
+                    Email
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-yellow-700">
+                    Joined
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {recentCustomers.length === 0 && (
                   <tr>
-                    <td colSpan={3} className="text-center text-gray-300 py-3">No recent customers.</td>
+                    <td colSpan={3} className="text-center text-gray-300 py-3">
+                      No recent customers.
+                    </td>
                   </tr>
                 )}
                 {recentCustomers.slice(0, 5).map((customer) => (
@@ -194,15 +245,23 @@ const AdminDashboard = () => {
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="bg-purple-50">
-                  <th className="px-3 py-2 text-left font-semibold text-purple-700">Name</th>
-                  <th className="px-3 py-2 text-left font-semibold text-purple-700">Role</th>
-                  <th className="px-3 py-2 text-left font-semibold text-purple-700">Joined</th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-700">
+                    Name
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-700">
+                    Role
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-purple-700">
+                    Joined
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {recentStaffs.length === 0 && (
                   <tr>
-                    <td colSpan={3} className="text-center text-gray-300 py-3">No recent staffs.</td>
+                    <td colSpan={3} className="text-center text-gray-300 py-3">
+                      No recent staffs.
+                    </td>
                   </tr>
                 )}
                 {recentStaffs.slice(0, 5).map((staff) => (

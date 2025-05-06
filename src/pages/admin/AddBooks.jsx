@@ -1,4 +1,3 @@
-
 const genreOptions = [
   "Fiction",
   "Non-Fiction",
@@ -97,7 +96,7 @@ const AddBooks = () => {
       }, 1000);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to create book");
+      console.log("Failed to create book");
       setIsSubmitting(false);
     }
   };

@@ -1,6 +1,7 @@
 import React from "react";
 import StaffNavBar from "../../components/staff/StaffNavBar";
 import StaffHeader from "../../components/staff/StaffHeader";
+import { Outlet } from "react-router-dom";
 
 const Staff = () => {
   return (

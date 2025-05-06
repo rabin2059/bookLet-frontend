@@ -8,7 +8,9 @@ import { AppContext } from "../../../context/AppContext";
 
 const DealCard = ({ book }) => {
   const [wish, setWish] = useState(false);
-  const { addToCart, fetchWishlist, setWishlist } = useContext(AppContext);
+  const { addToCart, fetchWishlist, setWishlist, checkLogged } =
+    useContext(AppContext);
+  console.log(checkLogged());
 
   const token = localStorage.getItem("token");
   const bookId = book.bookId;
@@ -62,7 +64,7 @@ const DealCard = ({ book }) => {
       }
     } catch (error) {
       console.error("Error adding to wishlist:", error);
-      toast.error("Failed to add to wishlist");
+      console.log("Failed to add to wishlist");
     }
   };
 
@@ -85,12 +87,14 @@ const DealCard = ({ book }) => {
       }
     } catch (error) {
       console.error("Error removing from wishlist:", error);
-      toast.error("Failed to remove from wishlist");
+      console.log("Failed to remove from wishlist");
     }
   };
 
   useEffect(() => {
-    checkWish();
+    if (checkLogged()) {
+      checkWish();
+    }
   }, []);
 
   return (
@@ -120,7 +124,9 @@ const DealCard = ({ book }) => {
         <div className="flex flex-col justify-between">
           <div className="mt-1">
             {/* Author */}
-            <div className="text-sm text-gray-800 font-thin mb-1">By {book.author}</div>
+            <div className="text-sm text-gray-800 font-thin mb-1">
+              By {book.author}
+            </div>
 
             {/* Title */}
             <Link to={`/bookDetails/${book.bookId}`}>

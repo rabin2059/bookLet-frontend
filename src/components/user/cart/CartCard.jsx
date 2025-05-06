@@ -39,7 +39,7 @@ const CartCard = ({ carts }) => {
         }
       );
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -59,7 +59,7 @@ const CartCard = ({ carts }) => {
         getCart();
       }
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 

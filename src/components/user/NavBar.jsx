@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   ChevronDown,
@@ -19,9 +19,10 @@ import { toast } from "react-toastify";
 import apiClient from "../../api/axios";
 
 const NavBar = () => {
+  const navgate = useNavigate();
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
-  const [showSignIn, setShowSignIn] = useState(false);
+  const { showSignUp, setShowSignUp, showSignIn, setShowSignIn } =
+    useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,7 +36,7 @@ const NavBar = () => {
       }
       setAnnouncement(data);
     } catch (error) {
-      toast.error(error.message);
+      console.log(error.message);
     }
   };
 
@@ -84,11 +85,14 @@ const NavBar = () => {
 
   return (
     <div className="w-full sticky top-0 z-50 bg-web-background">
-      
       {/* Top promotion bar (only show if there is an announcement) */}
       {announcement?.message && (
-        <div className={`w-full ${announcement.color} text-web-primary py-4 text-center`}>
-          <div className={`container ${announcement.color} mx-auto flex items-center justify-center`}>
+        <div
+          className={`w-full ${announcement.color} text-web-primary py-4 text-center`}
+        >
+          <div
+            className={`container ${announcement.color} mx-auto flex items-center justify-center`}
+          >
             <span className={`text-md text-white ${announcement.color}`}>
               {announcement.message}
             </span>
@@ -97,7 +101,9 @@ const NavBar = () => {
               className={`${announcement.textColor} ${announcement.color} font-bold hover:text-yellow-200 ml-2 inline-flex items-center underline`}
             >
               Shop Now
-              <ArrowRight className={`w-[20px] ${announcement.textColor} ml-1`}/>
+              <ArrowRight
+                className={`w-[20px] ${announcement.textColor} ml-1`}
+              />
             </NavLink>
           </div>
         </div>
@@ -357,40 +363,40 @@ const NavBar = () => {
                     <div className="px-4 py-2 text-sm font-semibold text-gray-100 uppercase tracking-wider">
                       Account
                     </div>
-                  <div className="flex flex-col gap-4 ">
-                  <NavLink
-                      to="/profile"
-                      className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-300"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <User />
-                      Your Profile
-                    </NavLink>
-                    <NavLink
-                      to="/orders"
-                      className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <ShoppingCart />
-                      My Orders
-                    </NavLink>
-                    <NavLink
-                      to="/wishlist"
-                      className="flex flex-row gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <Heart />
-                      My Wishlist
-                    </NavLink>
-                    <NavLink
-                      to="/cart"
-                      className="flex flex-row gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <ShoppingBag />
-                      Cart
-                    </NavLink>
-                  </div>
+                    <div className="flex flex-col gap-4 ">
+                      <NavLink
+                        to="/profile"
+                        className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-300"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <User />
+                        Your Profile
+                      </NavLink>
+                      <NavLink
+                        to="/orders"
+                        className="flex flex-row gap-2  px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <ShoppingCart />
+                        My Orders
+                      </NavLink>
+                      <NavLink
+                        to="/wishlist"
+                        className="flex flex-row gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <Heart />
+                        My Wishlist
+                      </NavLink>
+                      <NavLink
+                        to="/cart"
+                        className="flex flex-row gap-2 px-4 py-2 text-sm text-gray-300 hover:bg-gray-100"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <ShoppingBag />
+                        Cart
+                      </NavLink>
+                    </div>
                   </div>
 
                   {/* Authentication section */}
@@ -400,6 +406,7 @@ const NavBar = () => {
                         onClick={() => {
                           localStorage.removeItem("token");
                           localStorage.removeItem("role");
+                          navgate("/");
                           setIsLoggedIn(false);
                           setMenuOpen(false);
                         }}

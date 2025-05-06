@@ -28,7 +28,7 @@ const EditBooks = () => {
         setBook(data.data);
         setLoading(false);
       } catch (err) {
-        toast.error("Failed to fetch book details:", err);
+        console.log("Failed to fetch book details:", err);
         setLoading(false);
       }
     };
@@ -93,7 +93,7 @@ const EditBooks = () => {
         window.location.href = `/admin/books/${bookId}`;
       }, 2000);
     } catch (err) {
-      toast.error(err.message || "Error updating book");
+      console.log(err.message || "Error updating book");
     }
   };
 

@@ -7,7 +7,7 @@ const GenreSection = () => {
 
   return (
     <div className="mb-10">
-      <h1 className="text-xl font-semibold mb-4">Shop By Genre</h1>
+      <h1 className="font-bold text-2xl mb-4">Shop By Genre</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-3 mt-5">
         {Object.entries(
           allBooks.reduce((acc, book) => {

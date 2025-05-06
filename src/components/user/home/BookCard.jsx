@@ -8,8 +8,9 @@ import { AppContext } from "../../../context/AppContext";
 
 const BookCard = ({ book }) => {
   const [wish, setWish] = useState(false);
-  const { addToCart, fetchWishlist, setWishlist, setShowSignIn } = useContext(AppContext);
-
+  const { addToCart, fetchWishlist, setWishlist, checkLogged } =
+    useContext(AppContext);
+console.log(book)
   const token = localStorage.getItem("token");
   const bookId = book.bookId;
   const checkWish = async () => {
@@ -28,11 +29,7 @@ const BookCard = ({ book }) => {
         setWish(false);
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      } else {
-        console.error("Error checking wishlist:", error);
-      }
+      console.error("Error checking wishlist:", error);
     }
   };
 
@@ -43,7 +40,9 @@ const BookCard = ({ book }) => {
         quantity: 1,
       };
       addToCart(data);
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Failed to Add")
+    }
   };
 
   const addWish = async () => {
@@ -65,12 +64,8 @@ const BookCard = ({ book }) => {
         fetchWishlist();
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      } else {
-        console.error("Error adding to wishlist:", error);
-        toast.error("Failed to add to wishlist");
-      }
+      console.error("Error adding to wishlist:", error);
+      toast.error("Failed to add to wishlist");
     }
   };
 
@@ -92,23 +87,21 @@ const BookCard = ({ book }) => {
         setWishlist((prev) => prev.filter((b) => b.bookId !== bookId));
       }
     } catch (error) {
-      if (error.response?.status === 401) {
-        setShowSignIn(true);
-      } else {
-        console.error("Error removing from wishlist:", error);
-        toast.error("Failed to remove from wishlist");
-      }
+      console.error("Error removing from wishlist:", error);
+      toast.error("Failed to remove from wishlist");
     }
   };
 
   useEffect(() => {
-    checkWish();
+    if (checkLogged()) {
+      checkWish();
+    }
   }, []);
 
   return (
     <div className="flex flex-col w-[255px] pb-8">
       <div className="relative mb-2">
-        <Link to={`/bookDetails/${book.bookId}`}>
+        <Link to={`/bookDetails/${book.bookId}`} state={{ book }}>
           <img
             src={book.imageUrl}
             alt={book.title}
@@ -149,7 +142,9 @@ const BookCard = ({ book }) => {
 
       {/* Price */}
       <div className="mb-2">
-        <div className="text-xs text-gray-500 line-through">Rs {book.price} mrp</div>
+        <div className="text-xs text-gray-500 line-through">
+          Rs {book.price} mrp
+        </div>
         <div className="flex justify-between items-center">
           <span className="font-bold">
             Rs {book.price - (book.discount * book.price) / 100}

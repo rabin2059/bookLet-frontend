@@ -107,7 +107,7 @@ const Banner = () => {
       return { label: "Scheduled", class: "bg-yellow-100 text-yellow-800" };
     if (today > end)
       return { label: "Expired", class: "bg-red-100 text-red-800" };
-    return { label: "IsPinned", class: "bg-green-100 text-green-800" };
+    return { label: "Active", class: "bg-green-100 text-green-800" };
   };
 
   const handleAdd = () => {
@@ -169,7 +169,7 @@ const Banner = () => {
         isAddOpen ? "Banner added successfully" : "Banner updated successfully"
       );
     } catch {
-      toast.error("Failed to save banner. Please try again.");
+      console.log("Failed to save banner. Please try again.");
     }
   };
 
@@ -185,7 +185,7 @@ const Banner = () => {
       setCurrentBanner(null);
       toast.success("Banner deleted successfully");
     } catch {
-      toast.error("Failed to delete banner. Please try again.");
+      console.log("Failed to delete banner. Please try again.");
     }
   };
 
@@ -214,7 +214,7 @@ const Banner = () => {
         `Banner ${!banner.IsPinned ? "activated" : "deactivated"} successfully`
       );
     } catch {
-      toast.error("Failed to update banner status.");
+      console.log("Failed to update banner status.");
     }
   };
 

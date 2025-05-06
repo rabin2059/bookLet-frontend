@@ -3,12 +3,14 @@ import { X, Eye, EyeOff } from "lucide-react";
 import apiClient from "../../../api/axios";
 import { toast } from "react-toastify";
 import { AppContext } from "../../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const SignInSection = ({ onClose, setShowSignUp }) => {
+  const navigate = useNavigate();
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const { getCart } = useContext(AppContext);
+  const { getCart, checkLogged } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     try {
@@ -28,18 +30,21 @@ const SignInSection = ({ onClose, setShowSignUp }) => {
       if (data.statusCode == 200) {
         toast.success(data.message || "Login successful !!!!!");
         onClose();
+        await checkLogged();
         getCart();
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.user.role);
         window.dispatchEvent(new Event("storage"));
         if (data.user.role === "Admin") {
-          window.location.href = "/admin";
+          navigate("/admin");
+        } else if (data.user.role === "Staff") {
+          navigate("/staff");
         }
       }
     } catch (error) {
       const errorMessage =
         error.response?.data || "An unexpected error occurred during login.";
-      toast.error(errorMessage);
+      console.log(errorMessage);
     }
   };
 
@@ -62,7 +67,7 @@ const SignInSection = ({ onClose, setShowSignUp }) => {
           {/* username Field */}
           <div className="relative">
             <input
-              type="username"
+              type="text"
               id="username"
               value={username}
               onChange={(e) => setusername(e.target.value)}
