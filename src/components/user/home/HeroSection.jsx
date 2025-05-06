@@ -9,7 +9,11 @@ const HeroSection = () => {
 
   return (
     <div className="bg-[#fefdf9] py-20 px-6 pb-80 sm:px-10 lg:px-20">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+    <div className="absolute inset-0 z-0">
+        <div className="w-[400px] h-[400px] bg-purple-200 blur-3xl rounded-full bottom-24 absolute top-60 left-10 opacity-40" />
+        <div className="w-[400px] h-[400px] bg-yellow-200 blur-3xl rounded-full absolute bottom-50 top-36 left-96  opacity-30" />
+      </div>
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-20">
         
         {/* Left text */}
         <div className="md:w-1/2 space-y-6">
@@ -20,7 +24,7 @@ const HeroSection = () => {
             It’s time to update your reading list with some of the latest and greatest
             releases in the literary world. From heart-pumping thrillers to captivating
             memoirs, this week's new releases offer something for everyone.
-          </p>
+          </p>  
 
           {/* Gradient search bar */}
           <div className="flex items-center bg-gradient-to-r from-yellow-100 to-purple-100 rounded-full p-1 shadow-md max-w-md">
@@ -58,10 +62,10 @@ const HeroSection = () => {
         {/* Right image stack */}
         <div className="md:w-1/2 relative h-72 md:h-96 flex justify-center items-start">
           
-          <img
+        <img
             src={images.herobook}
             alt="Book 1"
-            className="h-[150%]"
+            className="h-full md:h-[150%] object-contain"
           />
         </div>
       </div>

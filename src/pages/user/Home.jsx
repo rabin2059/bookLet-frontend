@@ -5,6 +5,7 @@ import GenreSection from "../../components/user/home/GenreSection";
 import DealSection from "../../components/user/home/DealSection";
 import BannerSection from "../../components/user/home/BannerSection";
 import ContactSection from "../../components/user/home/ContactSection";
+import BestSelling from "../../components/user/home/BestSelling";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
     <HeroSection/>
       <GenreSection/>
       <BookSection/>
+    <BestSelling/>
       <DealSection/>
     </div>
       <BannerSection/>
