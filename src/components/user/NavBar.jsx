@@ -32,7 +32,41 @@ const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { cart } = useContext(AppContext) || { cart: [] };
+  const [elapsedTime, setElapsedTime] = useState("");
+
+  // Calculate elapsed time from start date to now
+  const calculateElapsedTime = (endDate) => {
+    const start = new Date();
+    const now = new Date(endDate);
+
+    if (isNaN(start)) return "Invalid start date";
+
+    let diffMs = now - start;
+    if (diffMs < 0) return "Starts in future";
+
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    diffMs %= 1000 * 60 * 60 * 24;
+
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    diffMs %= 1000 * 60 * 60;
+
+    const minutes = Math.floor(diffMs / (1000 * 60));
+    diffMs %= 1000 * 60;
+
+    const seconds = Math.floor(diffMs / 1000);
+
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
+
+  useEffect(() => {
+    if (announcement?.start) {
+      const intervalId = setInterval(() => {
+        setElapsedTime(calculateElapsedTime(announcement.end));
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [announcement]);
 
   const getBanner = async () => {
     try {
@@ -40,6 +74,7 @@ const NavBar = () => {
       if (!data.active) {
         setAnnouncement("");
       }
+      console.log(data);
       setAnnouncement(data);
     } catch (error) {
       console.log(error.message);
@@ -62,7 +97,6 @@ const NavBar = () => {
     return () => window.removeEventListener("storage", checkLogin);
   }, []);
 
-  // Add this useEffect to your NavBar component to disable body scrolling when menu is open
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
@@ -75,7 +109,6 @@ const NavBar = () => {
     };
   }, [menuOpen]);
 
-  // Also add a ref to close the menu when clicking outside
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -99,6 +132,9 @@ const NavBar = () => {
           <div
             className={`container ${announcement.color} mx-auto flex items-center justify-center`}
           >
+            <span className={`${announcement.textColor} pr-2 font-semibold`}>
+              {elapsedTime}
+            </span>
             <span className={`text-md text-white ${announcement.color}`}>
               {announcement.message}
             </span>

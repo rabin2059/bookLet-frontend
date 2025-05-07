@@ -14,7 +14,7 @@ const OrderVerify = ({ order, onClose }) => {
 
       if (response.data.status === "success") {
         toast.success("Order verified successfully");
-        onClose(); 
+        onClose();
       } else {
         toast.error(response.data.message || "Verification failed");
       }
@@ -24,21 +24,29 @@ const OrderVerify = ({ order, onClose }) => {
   };
 
   return (
-    <div className="mb-6">
-      <h2 className="text-lg font-medium mb-2">Verify Claim Code for Order #{order.id}</h2>
-      <div className="flex items-center gap-3">
+    <div className="">
+      <div className="flex flex-col items-center">
+        <div className="flex flex-row justify-between items-center w-full">
+            <p></p>
+        <h1 className="text-2xl font-bold ">Verify Order</h1>
+        <button onClick={onClose}>x</button>
+        </div>
+        <h2 className="text-sm font-medium">Order Id: {order.orderId}</h2>
+      </div>
+      <div className="flex flex-col mt-3 gap-2">
+        <p className="font-semibold text-lg">Claim Code</p>
         <input
           type="text"
           value={claimCode}
           onChange={(e) => setClaimCode(e.target.value)}
           placeholder="Enter claim code"
-          className="border border-gray-300 rounded px-4 py-2 w-64"
+          className="border border-dashed border-black bg-gray-100 rounded px-4 py-2"
         />
-        <button onClick={handleVerify} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        <button
+          onClick={handleVerify}
+          className="bg-web-secondary text-web-primary text-lg font-semibold px-4 py-3 rounded mt-5"
+        >
           Verify
-        </button>
-        <button onClick={onClose} className="text-sm underline text-red-500 ml-4">
-          Cancel
         </button>
       </div>
     </div>

@@ -20,6 +20,7 @@ import StaffDashboard from "./pages/staff/StaffDashboard";
 import StaffOrder from "./pages/staff/StaffOrder";
 import BookDetails from "./pages/user/BookDetails";
 import AuthenticatedRoute from "./components/basic components/AuthenticatedRoute";
+import OrderDetails from "./components/staff/staff orders/OrderDetails";
 
 const App = () => {
   const isAdminRoute = useMatch("/admin/*");
@@ -64,6 +65,7 @@ const App = () => {
         <Route path="/staff" element={<Staff />}>
           <Route path="/staff" element={<StaffDashboard />} />
           <Route path="/staff/orders" element={<StaffOrder />} />
+          <Route path="/staff/orders/orderDetails" element={<OrderDetails />} />
         </Route>
       </Routes>
       {!isAdminRoute && !isStaffRoute && <Footer />}

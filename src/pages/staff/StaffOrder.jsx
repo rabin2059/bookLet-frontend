@@ -17,6 +17,7 @@ const StaffOrder = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(data);
       if (data.status === "success") {
         setOrders(data.data);
       }
@@ -38,7 +39,14 @@ const StaffOrder = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Staff Orders</h1>
       {isVerify && selectedOrder && (
-        <OrderVerify order={selectedOrder} onClose={() => setIsVerify(false)} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 max-w-xl w-[450px]">
+            <OrderVerify
+              order={selectedOrder}
+              onClose={() => setIsVerify(false)}
+            />
+          </div>
+        </div>
       )}
       <OrderTable orders={orders} onVerify={handleVerify} />
     </div>
