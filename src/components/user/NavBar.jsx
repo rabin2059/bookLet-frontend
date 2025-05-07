@@ -15,14 +15,20 @@ import images from "../../assets/assets";
 import SignUp from "../user/auth/SignUpSection";
 import SignIn from "../user/auth/SignInSection";
 import { AppContext } from "../../context/AppContext";
-import { toast } from "react-toastify";
 import apiClient from "../../api/axios";
+import UserVerification from "./auth/UserVerification";
 
 const NavBar = () => {
   const navgate = useNavigate();
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  const { showSignUp, setShowSignUp, showSignIn, setShowSignIn } =
-    useContext(AppContext);
+  const {
+    showSignUp,
+    setShowSignUp,
+    showSignIn,
+    setShowSignIn,
+    setShowVerification,
+    showVerification,
+  } = useContext(AppContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [announcement, setAnnouncement] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -440,10 +446,16 @@ const NavBar = () => {
           setShowSignUp={setShowSignUp}
         />
       )}
+      {showVerification && (
+        <UserVerification
+          onClose={() => setShowVerification(false)}
+          setShowSignIn={setShowSignIn}
+        />
+      )}
       {showSignUp && (
         <SignUp
           onClose={() => setShowSignUp(false)}
-          setShowSignIn={setShowSignIn}
+          setShowVerification={setShowVerification}
         />
       )}
     </div>

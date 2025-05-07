@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import apiClient from "../../../api/axios";
 import { toast } from "react-toastify";
 
-const SignUpSection = ({ onClose, setShowSignIn }) => {
+const SignUpSection = ({ onClose, setShowVerification }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ const SignUpSection = ({ onClose, setShowSignIn }) => {
     });
     if (data.statusCode == 200) {
       toast.success(data.message);
-      setShowSignIn(true);
+      setShowVerification(true);
       onClose();
     }
   };

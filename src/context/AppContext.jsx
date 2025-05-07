@@ -10,6 +10,7 @@ export const AppContextProvider = (props) => {
   const [wishlist, setWishlist] = useState("");
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const checkLogged = () => {
@@ -124,6 +125,8 @@ export const AppContextProvider = (props) => {
     setShowSignIn,
     showSignUp,
     setShowSignUp,
+    showVerification,
+    setShowVerification,
     isLoggedIn,
     checkLogged,
   };
